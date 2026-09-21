@@ -2,7 +2,6 @@ from test_trivia_questions import questions
 import random
 
 
-# num_ten = [1,2,3,4,5,6,7,8,9,0]
 def main():
     random.shuffle(questions)
     question_num = 1
@@ -12,10 +11,34 @@ def main():
         # print(f"question: {question}")
         for key, value in question.items():
             if key == "question":
-                print(f'[{question_num}] {question["question"]}')
-                for option in question["options"]:
-                    print(option)
-                get_input("your answer")
+                while True:
+                    print(f'[{question_num}] {question["question"]}')
+                    i = 0
+                    for option in question["options"]:
+                        print(f" ({chr(97+i)}) {option}")
+                        i += 1
+                    print()
+                    user_answer = get_input("your answer")
+                    if user_answer in ("a", "b", "c", "d"):
+                        match user_answer:
+                            case "a":
+                                user_answer = question["options"][0]
+                            case "b":
+                                user_answer = question["options"][1]
+                            case "c":
+                                user_answer = question["options"][2]
+                            case "d":
+                                user_answer = question["options"][3]
+                        print("usy:", user_answer)
+                        if user_answer == question["answer"]:
+                            score += 1
+                            print("user:", user_answer)
+                            print("score:", score)
+                        break
+                    else:
+                        print("Input a valid option\n")
+
+        # print(score)
         question_num += 1
 
 
