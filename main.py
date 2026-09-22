@@ -4,49 +4,45 @@ import random
 
 def main():
     random.shuffle(questions)
-    question_num = 1
+    # question_num = 1
     score = 0
-    total_question = 10
-    for i in range(total_question):
-        if i >= len(questions):
-            print("only range 1-100")
-            break
-        question = questions[i]
-        for key, value in question.items():
-            if key == "question":
-                while True:
-                    print(f'[{question_num}] {question["question"]}')
-                    i = 0
-                    for option in question["options"]:
-                        print(f" ({chr(97+i)}) {option}")
-                        i += 1
+    total_questions = min(10, len(questions))
+    selected_questions = questions[:total_questions]
+    for q_num, q in enumerate(selected_questions, start=1):
+        while True:
+            print(f'[{q_num}] {q["question"]}')
+            # i = 0
+            for idx, option in enumerate(q["options"]):
+                print(f" ({chr(97+idx)}) {option}")
+                # i += 1
+            print()
+            user_answer = get_input("your answer").lower().strip()
+            index = ord(user_answer) - 97
+            selected_answer = q["options"][index]
+            print()
+            if user_answer in ("a", "b", "c", "d"):
+                match user_answer:
+                    case "a":
+                        user_answer = selected_answer
+                    case "b":
+                        user_answer = selected_answer
+                    case "c":
+                        user_answer = selected_answer
+                    case "d":
+                        user_answer = selected_answer
+                if user_answer == q["answer"]:
+                    print("correct!")
                     print()
-                    user_answer = get_input("your answer")
+                    score += 1
+                else:
+                    print("Wrong!")
+                    print(f'Answer: {q["answer"]}')
                     print()
-                    if user_answer in ("a", "b", "c", "d"):
-                        match user_answer:
-                            case "a":
-                                user_answer = question["options"][0]
-                            case "b":
-                                user_answer = question["options"][1]
-                            case "c":
-                                user_answer = question["options"][2]
-                            case "d":
-                                user_answer = question["options"][3]
-                        if user_answer == question["answer"]:
-                            print("correct!")
-                            print()
-                            score += 1
-                        else:
-                            print("Wrong!")
-                            print(f'Answer: {question["answer"]}')
-                            print()
-                        break
-                    else:
-                        print("Input a valid option\n")
+                break
+            else:
+                print("Input a valid option\n")
 
-        question_num += 1
-    print(f"You scored:  {score}/{total_question}")
+    print(f"You scored:  {score}/{total_questions}")
 
 
 def get_input(text):
