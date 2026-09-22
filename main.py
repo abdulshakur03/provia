@@ -1,4 +1,4 @@
-from test_trivia_questions import questions
+from trivia_questions import questions
 import random
 
 
@@ -6,9 +6,12 @@ def main():
     random.shuffle(questions)
     question_num = 1
     score = 0
-    for question in questions:
-        # question = questions[i]
-        # print(f"question: {question}")
+    total_question = 10
+    for i in range(total_question):
+        if i >= len(questions):
+            print("only range 1-100")
+            break
+        question = questions[i]
         for key, value in question.items():
             if key == "question":
                 while True:
@@ -19,6 +22,7 @@ def main():
                         i += 1
                     print()
                     user_answer = get_input("your answer")
+                    print()
                     if user_answer in ("a", "b", "c", "d"):
                         match user_answer:
                             case "a":
@@ -29,17 +33,20 @@ def main():
                                 user_answer = question["options"][2]
                             case "d":
                                 user_answer = question["options"][3]
-                        print("usy:", user_answer)
                         if user_answer == question["answer"]:
+                            print("correct!")
+                            print()
                             score += 1
-                            print("user:", user_answer)
-                            print("score:", score)
+                        else:
+                            print("Wrong!")
+                            print(f'Answer: {question["answer"]}')
+                            print()
                         break
                     else:
                         print("Input a valid option\n")
 
-        # print(score)
         question_num += 1
+    print(f"You scored:  {score}/{total_question}")
 
 
 def get_input(text):
