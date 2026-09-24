@@ -19,11 +19,10 @@ def main():
 
 
 def start():
-    random.shuffle(questions)
     score = 0
     question_amount = get_valid_int_input("the amount of questions you wish to answer")
     total_questions = min(question_amount, len(questions))
-    selected_questions = questions[:total_questions]
+    selected_questions = random.sample(questions, k=total_questions)
     for q_num, q in enumerate(selected_questions, start=1):
         while True:
             print(f'[{q_num}] {q["question"]}')
